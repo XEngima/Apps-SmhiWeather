@@ -15,12 +15,26 @@ namespace SmhiWeather
     /// </remarks>
     public class ForecastTimeSerie
     {
+        /// <summary>
+        /// The time in universal time when this time serie is valid (when the weather will occur).
+        /// </summary>
         public DateTime validTime { get; set; }
+
+        /// <summary>
+        /// The time in local time when this time serie is valid (when the weather will occur).
+        /// </summary>
+        public DateTime ValidLocalTime
+        {
+            get
+            {
+                return validTime.ToLocalTime();
+            }
+        }
 
         public ForecastParameter[] parameters { get; set; }
 
         ///// <summary>
-        ///// Hämtar eller sätter temperaturen i grader Celcius.
+        ///// Gets the temperature in degrees Celcius.
         ///// </summary>
         public decimal t
         {

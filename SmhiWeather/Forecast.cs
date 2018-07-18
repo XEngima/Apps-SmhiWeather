@@ -15,6 +15,9 @@ namespace SmhiWeather
     /// </remarks>
     public class Forecast
     {
+        /// <summary>
+        /// The time the forecast latest was updated.
+        /// </summary>
         public DateTime referenceTime { get; set; }
 
         public ForecastTimeSerie[] timeseries { get; set; }

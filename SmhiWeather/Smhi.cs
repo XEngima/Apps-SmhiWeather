@@ -61,7 +61,10 @@ namespace SmhiWeather
 
             foreach (var timeSerie in forecast.timeseries.OrderBy(ts => ts.validTime))
             {
-                if (timeSerie.validTime.ToUniversalTime().AddMinutes(30) > utcNow)
+                var universalTime = timeSerie.validTime.ToUniversalTime();
+                var localTime = timeSerie.validTime.ToLocalTime();
+
+                if (universalTime.AddMinutes(30) > utcNow)
                 {
                     return timeSerie;
                 }
