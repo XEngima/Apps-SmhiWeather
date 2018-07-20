@@ -14,15 +14,32 @@ namespace SmhiWeather
     /// </remarks>
     public class ForecastParameter
     {
+        /// <summary>
+        /// Gets or sets the name of the parameter.
+        /// </summary>
         public string name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the level type.
+        /// </summary>
         public string levelType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the level.
+        /// </summary>
         public int level { get; set; }
+
+        // Gets or sets the unit.
         public string unit { get; set; }
+
+        /// <summary>
+        /// Gets or sets the values.
+        /// </summary>
         public decimal[] values { get; set; }
 
         public override string ToString()
         {
-            return name + ": " + values[0];
+            return name + ": " + values[0] + " " + unit;
         }
     }
 }

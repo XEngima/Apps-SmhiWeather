@@ -10,7 +10,7 @@ namespace Weather
             Smhi smhi = new Smhi(59.28m, 15.21m, new TimeSpan(1, 0, 0));
             var currentWeather = smhi.GetCurrentWeather();
 
-            Console.WriteLine("Temperature is " + currentWeather.t + " degrees Celcius.");
+            Console.WriteLine("Temperature is " + currentWeather.Temperature + " degrees Celcius.");
             Console.Read();
         }
     }

@@ -16,12 +16,12 @@ namespace SmhiWeather
     public class ForecastTimeSerie
     {
         /// <summary>
-        /// The time in universal time when this time serie is valid (when the weather will occur).
+        /// Gets or sets the time (in universal time) when this time serie is valid (when the weather will occur).
         /// </summary>
         public DateTime validTime { get; set; }
 
         /// <summary>
-        /// The time in local time when this time serie is valid (when the weather will occur).
+        /// Gets or sets the time in local time when this time serie is valid (when the weather will occur).
         /// </summary>
         public DateTime ValidLocalTime
         {
@@ -31,12 +31,15 @@ namespace SmhiWeather
             }
         }
 
+        /// <summary>
+        /// Gets or sets the time serie's parameters.
+        /// </summary>
         public ForecastParameter[] parameters { get; set; }
 
-        ///// <summary>
-        ///// Gets the temperature in degrees Celcius.
-        ///// </summary>
-        public decimal t
+        /// <summary>
+        /// Gets the air pressure in hPa (value range: decimal number, one decimal). Shorthand for parameter "msl".
+        /// </summary>
+        public decimal AirPressure
         {
             get
             {
@@ -50,30 +53,214 @@ namespace SmhiWeather
             }
         }
 
-        ///// <summary>
-        ///// Hämtar eller sätter total molnighet. Heltal mellan 0 - 9.
-        ///// </summary>
-        //public int tcc { get; set; }
+        /// <summary>
+        /// Gets the horizontal visibility in kilometers (value range: decimal number, one decimal). Shorthand for parameter "vis".
+        /// </summary>
+        public decimal Visibility
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "t");
+                if (parameter != null)
+                {
+                    return parameter.values[0];
+                }
 
-        ///// <summary>
-        ///// Hämtar eller sätter låg molnighet. Heltal mellan 0-8 (osäkert, varför inte 0-9 so för tcc?).
-        ///// </summary>
-        //public int lcc { get; set; }
+                return 0;
+            }
+        }
 
-        ///// <summary>
-        ///// Hämtar eller sätter medium molnighet. Heltal mellan 0-8 (osäkert, varför inte 0-9 so för tcc?).
-        ///// </summary>
-        //public int mcc { get; set; }
+        /// <summary>
+        /// Gets the wind direction in degrees (value range: integer). Shorthand for parameter "wd".
+        /// </summary>
+        public int WindDirection
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "wd");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
 
-        ///// <summary>
-        ///// Hämtar eller sätter hög molnighet. Heltal mellan 0-8 (osäkert, varför inte 0-9 so för tcc?).
-        ///// </summary>
-        //public int hcc { get; set; }
+                return 0;
+            }
+        }
 
-        ///// <summary>
-        ///// Hämter eller sätter relativ luftfuktighet i procent.
-        ///// </summary>
-        public int r
+        /// <summary>
+        /// Gets the wind speed in meters per second (value range: decimal number, one decimal). Shorthand for parameter "ws".
+        /// </summary>
+        public decimal WindSpeed
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "ws");
+                if (parameter != null)
+                {
+                    return parameter.values[0];
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the air temperature in degrees Celcius (value range: decimal number, one decimal). Shorthand for parameter "t".
+        /// </summary>
+        public decimal Temperature
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "t");
+                if (parameter != null)
+                {
+                    return parameter.values[0];
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the thunder probability in percent (value range: integer, 0-100). Shorthand for parameter "tstm".
+        /// </summary>
+        public int ThunderProbability
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "tstm");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mean value of total cloud cover in octas (value range: integer, 0-8). Shorthand for parameter "tcc_mean".
+        /// </summary>
+        public int CloudCoverTotal
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "tcc_mean");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mean value of low level cloud cover in octas (value range: integer, 0-8). Shorthand for parameter "lcc_mean".
+        /// </summary>
+        public int CloudCoverLow
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "lcc_mean");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mean value of medium level cloud cover in octas (value range: integer, 0-8). Shorthand for parameter "mcc_mean".
+        /// </summary>
+        public int CloudCoverMedium
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "mcc_mean");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the mean value of high level cloud cover in octas (value range: integer, 0-8). Shorthand for parameter "hcc_mean".
+        /// </summary>
+        public int CloudCoverHigh
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "hcc_mean");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the wind gust speed in meters per second (value range: decimal number, one decimal). Shorthand for parameter "gust".
+        /// </summary>
+        public int WindGustSpeed
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "gust");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimum precipitation intensity in millimeters per hour (value range: decimal number, one decimal). Shorthand for parameter "pmin".
+        /// </summary>
+        public int PrecipitationMin
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "pmin");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum precipitation intensity in millimeters per hour (value range: decimal number, one decimal). Shorthand for parameter "pmax".
+        /// </summary>
+        public int PrecipitationMax
+        {
+            get
+            {
+                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "pmax");
+                if (parameter != null)
+                {
+                    return Convert.ToInt32(parameter.values[0]);
+                }
+
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the relative humidity in percent (value range: integer, 0-100). Shorthand for parameter "r".
+        /// </summary>
+        public int Humidity
         {
             get
             {
@@ -87,78 +274,9 @@ namespace SmhiWeather
             }
         }
 
-        ///// <summary>
-        ///// Hämter eller sätter sannolikhet för åska i procent.
-        ///// </summary>
-        //public int tstm { get; set; }
-
-        ///// <summary>
-        ///// Hämtar och sätter sikt i km.
-        ///// </summary>
-        //public decimal vis { get; set; }
-
-        ///// <summary>
-        ///// Hämtar eller sätter byvind i m/s.
-        ///// </summary>
-        //public decimal gust { get; set; }
-
-        ///// <summary>
-        ///// Hämtar eller sätter nederbördsintensitet, total - förmodligen i mm/h.
-        ///// </summary>
-        public decimal pit
-        {
-            get
-            {
-                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "pit");
-                if (parameter != null)
-                {
-                    return parameter.values[0];
-                }
-
-                return 0;
-            }
-        }
-
-        ///// <summary>
-        ///// Hämtar eller sätter nederbördsintensitet, snö - förmodligen i mm/h.
-        ///// </summary>
-        //public decimal pis { get; set; }
-
-        ///// <summary>
-        ///// Hämtar eller sätter nederbördstyp. 0 = ingen, 1 = snö, 2 = snöblandat regn, 3 = regn, 4 = duggregn, 5 = underkylt regn, 6 = underkylt duggregn.
-        ///// </summary>
-        public int pcat
-        {
-            get
-            {
-                ForecastParameter parameter = parameters.FirstOrDefault(p => p.name == "pcat");
-                if (parameter != null)
-                {
-                    return Convert.ToInt32(parameter.values[0]);
-                }
-
-                return 0;
-            }
-        }
-
-        ///// <summary>
-        ///// Hämtar eller sätter lufttryck vid vid havsnivån i hPa.
-        ///// </summary>
-        //public decimal msl { get; set; }
-
-        ///// <summary>
-        ///// Hämtar eller sätter vindriktning i grader (0-360).
-        ///// </summary>
-        //public int wd { get; set; }
-
-        ///// <summary>
-        ///// Hämtar eller sätter vindhastighet i m/s.
-        ///// </summary>
-        //public decimal ws { get; set; }
-
         public override string ToString()
         {
-            return validTime.ToString("yyyy-MM-dd HH:mm") + ", Temp=" + t + ", Humidity=" + r;
+            return validTime.ToString("yyyy-MM-dd HH:mm") + ", Temp=" + Temperature + ", Humidity=" + Humidity;
         }
     }
 }
