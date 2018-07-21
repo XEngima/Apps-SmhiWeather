@@ -4,19 +4,14 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 
-/// <summary>
-/// A class representing the SMHI service that can be asked for the weather forecast.
-/// For SMHI's own documentation on weather parameters, see https://opendata.smhi.se/apidocs/metfcst/parameters.html.
-/// </summary>
 namespace SmhiWeather
 {
     /// <summary>
-    /// Class representing and SMHI API interface.
+    /// A class representing the SMHI API service interface of type Pmp3g version 2, that can be asked for the weather forecast.
+    /// For SMHI's own documentation on weather parameters, see https://opendata.smhi.se/apidocs/metfcst/parameters.html.
     /// </summary>
     public class Smhi
     {
-        private readonly decimal _coordLat = 0;
-        private readonly decimal _coordLon = 0;
         private readonly TimeSpan _refreshInterval = new TimeSpan(1, 0, 0);
         private Forecast _cachedForecast = null;
         private DateTime _lastRequestUtcTime = DateTime.MinValue;
@@ -27,11 +22,11 @@ namespace SmhiWeather
         /// <param name="lat">The decimal latitude.</param>
         /// <param name="lon">The decimal longitude.</param>
         /// <param name="refreshInterval">The refresh interval, telling the object how often it is ok to contact the SMHI web interface. 
-        /// Don't do it more often than necessary, or SMHI will block your access.</param>
+        /// Don't do it more often than necessary, or you will risk that SMHI will block your access.</param>
         public Smhi(decimal lat, decimal lon, TimeSpan refreshInterval)
         {
-            _coordLat = lat;
-            _coordLon = lon;
+            CoordLat = lat;
+            CoordLon = lon;
             _refreshInterval = refreshInterval;
         }
 
@@ -47,15 +42,25 @@ namespace SmhiWeather
         }
 
         /// <summary>
+        /// Gets the decimal latitude.
+        /// </summary>
+        public decimal CoordLat { get; private set; }
+
+        /// <summary>
+        /// Gets the decimal longitude.
+        /// </summary>
+        public decimal CoordLon { get; private set; }
+
+        /// <summary>
         /// Gets the complete SMHI forecast for the days ahead.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A forecast for the days ahead.</returns>
         public Forecast GetForecast()
         {
             if (_cachedForecast == null || _lastRequestUtcTime + _refreshInterval < DateTime.UtcNow)
             {
-                string lat = _coordLat.ToString("0.00").Replace(",", ".");
-                string lon = _coordLon.ToString("0.00").Replace(",", ".");
+                string lat = CoordLat.ToString("0.00").Replace(",", ".");
+                string lon = CoordLon.ToString("0.00").Replace(",", ".");
                 string uri = $"http://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/{lon}/lat/{lat}/data.json";
                 HttpWebRequest webRequest = WebRequest.CreateHttp(uri);
 
@@ -80,9 +85,9 @@ namespace SmhiWeather
         }
 
         /// <summary>
-        /// Gets the SMHI forecast time serie for the current hour.
+        /// Gets the SMHI forecast time serie for the current hour, of for the first hour that exists in the forecast (may be a bit in the future).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The forecasted weather (time serie) for the current hour.</returns>
         public ForecastTimeSerie GetCurrentWeather()
         {
             DateTime utcNow = DateTime.UtcNow;

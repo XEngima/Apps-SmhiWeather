@@ -7,10 +7,12 @@ namespace Weather
     {
         static void Main(string[] args)
         {
-            Smhi smhi = new Smhi(59.28m, 15.21m, new TimeSpan(1, 0, 0));
+            // Initialize an SMHI object for Stockholm
+            Smhi smhi = new Smhi(60.68m, 17.14m);
+
             var currentWeather = smhi.GetCurrentWeather();
 
-            Console.WriteLine("Temperature is " + currentWeather.Temperature + " degrees Celcius.");
+            Console.WriteLine("Weather in Stockholm: " + currentWeather);
             Console.Read();
         }
     }

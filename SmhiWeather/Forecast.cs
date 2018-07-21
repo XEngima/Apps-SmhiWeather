@@ -16,10 +16,29 @@ namespace SmhiWeather
     public class Forecast
     {
         /// <summary>
-        /// The time the forecast latest was updated.
+        /// Gets or sets the univeral time for when the forecast was calculated (the start time for the forecast).
         /// </summary>
         public DateTime referenceTime { get; set; }
 
+        /// <summary>
+        /// Gets the local time for when the forecast was calculated (the start time for the forecast).
+        /// </summary>
+        public DateTime ReferenceTimeLocal
+        {
+            get
+            {
+                return referenceTime.ToLocalTime();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the time series that descript the weather forecast for each time period. Hourly at first, then with greater and greater time interval.
+        /// </summary>
         public ForecastTimeSerie[] timeseries { get; set; }
+
+        public override string ToString()
+        {
+            return ReferenceTimeLocal.ToString("yyyy-MM-dd HH:mm");
+        }
     }
 }
