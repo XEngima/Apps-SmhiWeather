@@ -8,7 +8,7 @@ namespace Weather
         static void Main(string[] args)
         {
             // Initialize an SMHI object for Stockholm
-            Smhi smhi = new Smhi(60.68m, 17.14m);
+            ISmhi smhi = new Smhi(60.68m, 17.14m);
 
             var currentWeather = smhi.GetCurrentWeather();
 

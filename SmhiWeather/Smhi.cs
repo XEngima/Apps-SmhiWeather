@@ -10,7 +10,7 @@ namespace SmhiWeather
     /// A class representing the SMHI API service interface of type Pmp3g version 2, that can be asked for the weather forecast.
     /// For SMHI's own documentation on weather parameters, see https://opendata.smhi.se/apidocs/metfcst/parameters.html.
     /// </summary>
-    public class Smhi
+    public class Smhi : ISmhi
     {
         private readonly TimeSpan _refreshInterval = new TimeSpan(1, 0, 0);
         private Forecast _cachedForecast = null;

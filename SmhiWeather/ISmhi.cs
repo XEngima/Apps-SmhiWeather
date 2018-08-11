@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SmhiWeather
 {
-    public interface IShmi
+    public interface ISmhi
     {
         decimal CoordLat { get; }
 
